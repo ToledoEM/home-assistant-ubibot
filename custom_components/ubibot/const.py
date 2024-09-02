@@ -15,6 +15,18 @@ SENSOR_TYPES = {
         "icon": "mdi:thermometer",
         "field": "field1",
     },
+    "temperature_ext": {
+        "class": DEVICE_CLASS_TEMPERATURE,
+        "unit": TEMP_CELSIUS,
+        "icon": "mdi:thermometer",
+        "field": "field9",
+    },
+     "humidity_ext": {
+        "class": DEVICE_CLASS_HUMIDITY,
+        "unit": "%",
+        "icon": "mdi:water-percent",
+        "field": "field10",
+    },
     "humidity": {
         "class": DEVICE_CLASS_HUMIDITY,
         "unit": "%",
