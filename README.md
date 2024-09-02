@@ -24,3 +24,5 @@ Store secrets in secrets.yaml
 ubibot_apikey: "YOUR_API_KEY" 
 ubibot_channel_number: "YOUR_CHANNEL_NUMBER"
 ```
+
+This version support external probe RS485 [link](https://store.ubibot.com/collections/external-sensors/products/temperature-and-humidity-probe)
