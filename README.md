@@ -26,3 +26,9 @@ ubibot_channel_number: "YOUR_CHANNEL_NUMBER"
 ```
 
 This version support external probe RS485 [link](https://store.ubibot.com/collections/external-sensors/products/temperature-and-humidity-probe)
+
+
+TO DO :
+
+- add https://github.com/jonpw/home-assistant-ubibot/blob/master/custom_components/ubibot/const.py
+- https://github.com/jonpw/home-assistant-ubibot/blob/master/custom_components/ubibot/sensor.py
