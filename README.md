@@ -1,5 +1,7 @@
 # Ubibot integration for Home Assistant
 
+## DEPRECATED not longer supported by Home Assistant 
+
 This repo provides a plugin to work with Ubibot thermometers as sensors
 
 ## Installation
