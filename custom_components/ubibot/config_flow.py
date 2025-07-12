@@ -1,6 +1,8 @@
 """Config flow for Ubibot integration."""
+from __future__ import annotations
+
 import logging
-from typing import Any, Dict, Optional
+from typing import Any
 
 import requests
 import voluptuous as vol
@@ -19,43 +21,50 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_API_KEY): str,
         vol.Required(CONF_CHANNEL): str,
-        vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): int,
+        vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): vol.All(
+            vol.Coerce(int), vol.Range(min=60)
+        ),
     }
 )
 
 
-async def validate_input(hass: HomeAssistant, data: dict) -> Dict[str, Any]:
+async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
     """Validate the user input allows us to connect."""
-
     url = f"https://api.ubibot.io/channels/{data[CONF_CHANNEL]}?account_key={data[CONF_API_KEY]}"
 
     try:
-        response = await hass.async_add_executor_job(
-            requests.get, url
-        )
+        response = await hass.async_add_executor_job(requests.get, url)
         response.raise_for_status()
+        json_response = response.json()
 
-        if response.status_code == 200:
-            return {"title": f"Ubibot Channel {data[CONF_CHANNEL]}"}
+        if "error" in json_response:
+            raise InvalidAuth
+
+        return {"title": f"Ubibot Channel {data[CONF_CHANNEL]}"}
 
     except requests.exceptions.HTTPError as err:
         if err.response.status_code == 401:
             raise InvalidAuth from err
         raise CannotConnect from err
-    except requests.exceptions.RequestException as err:
+    except (requests.exceptions.RequestException, ValueError) as err:
         raise CannotConnect from err
 
 
+@config_entries.HANDLERS.register(DOMAIN)
 class UbibotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Ubibot."""
 
     VERSION = 1
 
+    async def async_step_import(self, import_data: dict[str, Any]) -> FlowResult:
+        """Handle import from configuration.yaml."""
+        return await self.async_step_user(import_data)
+
     async def async_step_user(
-        self, user_input: Optional[Dict[str, Any]] = None
+        self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         """Handle the initial step."""
-        errors: Dict[str, str] = {}
+        errors: dict[str, str] = {}
 
         if user_input is not None:
             try:
