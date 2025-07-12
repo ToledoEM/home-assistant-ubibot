@@ -1,8 +1,8 @@
 """Ubibot sensor."""
-from datetime import datetime, timedelta
+
+from datetime import timedelta
 import json
 import logging
-import threading
 
 import aiohttp
 
@@ -13,7 +13,6 @@ from homeassistant.const import (
 from homeassistant.components.sensor import (
     SensorEntity,
     SensorStateClass,
-    SensorDeviceClass,
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback

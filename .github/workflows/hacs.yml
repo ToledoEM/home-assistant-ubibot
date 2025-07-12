@@ -1,10 +1,10 @@
-name: "Validate with hassfest"
+name: "HACS Validation"
 
 on:
   push:
   pull_request:
   schedule:
-    - cron: "0 0 1 * *"  # Run monthly instead of weekly
+    - cron: "0 0 1 * *"  # Run monthly
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,8 +14,11 @@ permissions:
   contents: read
 
 jobs:
-  validate:
+  hacs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v4"
-      - uses: "home-assistant/actions/hassfest@master"
+      - name: HACS validation
+        uses: "hacs/action@main"
+        with:
+          category: "integration"

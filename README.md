@@ -13,18 +13,19 @@ A Home Assistant integration for Ubibot IoT environmental sensors, providing rea
 
 Each Ubibot device will create the following sensors in Home Assistant:
 
-| Sensor | Description | Unit |
-|--------|-------------|------|
-| Temperature (Internal) | Internal temperature sensor | °C |
-| Temperature (External) | External probe temperature (if connected) | °C |
-| Humidity (Internal) | Internal humidity sensor | % |
-| Humidity (External) | External probe humidity (if connected) | % |
-| Light Level | Ambient light sensor | lux |
-| WiFi Signal | WiFi signal strength | dBm |
+| Sensor                 | Description                               | Unit |
+| ---------------------- | ----------------------------------------- | ---- |
+| Temperature (Internal) | Internal temperature sensor               | °C   |
+| Temperature (External) | External probe temperature (if connected) | °C   |
+| Humidity (Internal)    | Internal humidity sensor                  | %    |
+| Humidity (External)    | External probe humidity (if connected)    | %    |
+| Light Level            | Ambient light sensor                      | lux  |
+| WiFi Signal            | WiFi signal strength                      | dBm  |
 
 ## Requirements
 
 Before installing, you'll need:
+
 - A Ubibot account
 - Your Ubibot Account Key
 - Your device's Channel ID
@@ -63,6 +64,7 @@ The Ubibot integration is configured through the Home Assistant UI:
    - Update Interval (optional, defaults to 300 seconds)
 
 To find your Account Key and Channel ID:
+
 1. Log in to [Ubibot Cloud](https://console.ubibot.com)
 2. Go to "Account Settings" -> "Security Settings" for your Account Key
 3. Go to "Console Dashboard" and select your device for the Channel ID
@@ -72,17 +74,20 @@ To find your Account Key and Channel ID:
 Common issues and solutions:
 
 ### No Sensors Appear
+
 - Verify your Account Key and Channel ID
 - Check if your Ubibot device is online
 - Look for errors in Home Assistant logs
 - Ensure your device is reporting data to Ubibot Cloud
 
 ### Sensor Updates Are Delayed
+
 - Check your network connection
 - Verify the `scan_interval` setting
 - Ensure your Ubibot device is actively reporting
 
 ### Error Messages
+
 - "Invalid auth": Check your Account Key
 - "Cannot connect": Verify your internet connection and Channel ID
 - "Unknown": Check Home Assistant logs for detailed error messages
@@ -92,6 +97,7 @@ Common issues and solutions:
 This integration is based on the work of [@ms32035](https://github.com/ms32035/home-assistant-ubibot) and welcomes community contributions.
 
 To contribute:
+
 1. Fork the repository
 2. Create a feature branch
 3. Submit a Pull Request
