@@ -9,6 +9,7 @@ import requests
 
 from homeassistant.const import CONF_API_KEY, CONF_SCAN_INTERVAL
 from homeassistant.components.sensor import SensorEntity, SensorStateClass
+from homeassistant.components.sensor import SensorDeviceClass, UnitOfTemperature, UnitOfIlluminance, UnitOfSignalStrength
 
 from . import CONF_CHANNEL
 from .const import SENSOR_TYPES, MODELS
@@ -67,8 +68,8 @@ class UbibotSensor(SensorEntity):
         return SENSOR_TYPES[self._type]["icon"]
 
     @property
-    def unique_id(self) -> [str]:
-        """Return the icon."""
+    def unique_id(self) -> str:
+        """Return the unique id."""
         return f"{self._channel}_{self._type}"
 
     def update(self):

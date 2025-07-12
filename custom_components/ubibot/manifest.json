@@ -1,9 +1,10 @@
 {
   "domain": "ubibot",
   "name": "Ubibot",
+  "config_flow": true,
   "documentation": "https://www.ubibot.io/platform-api/",
-  "issue_tracker": "https://github.com/ms32035/home-assistant-ubibot/issues",
-  "requirements": [],
+  "issue_tracker": "https://github.com/ToledoEM/home-assistant-ubibot/issues",
+  "requirements": ["requests"],
   "dependencies": [],
   "codeowners": ["@ms32035"],
   "iot_class": "cloud_polling",

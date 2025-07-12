@@ -1,0 +1,23 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Ubibot Connection",
+                "description": "Set up your Ubibot integration",
+                "data": {
+                    "api_key": "Account Key",
+                    "channel": "Channel ID",
+                    "scan_interval": "Update Interval (seconds)"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Failed to connect. Please check your Account Key and Channel ID",
+            "invalid_auth": "Invalid Account Key",
+            "unknown": "Unexpected error"
+        },
+        "abort": {
+            "already_configured": "This Ubibot channel is already configured"
+        }
+    }
+}
