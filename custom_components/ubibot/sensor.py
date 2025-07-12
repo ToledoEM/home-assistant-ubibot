@@ -1,5 +1,4 @@
 """Ubibot sensor."""
-
 from datetime import datetime
 import json
 import logging
@@ -7,9 +6,18 @@ import threading
 
 import requests
 
-from homeassistant.const import CONF_API_KEY, CONF_SCAN_INTERVAL
-from homeassistant.components.sensor import SensorEntity, SensorStateClass
-from homeassistant.components.sensor import SensorDeviceClass, UnitOfTemperature, UnitOfIlluminance, UnitOfSignalStrength
+from homeassistant.const import (
+    CONF_API_KEY,
+    CONF_SCAN_INTERVAL,
+)
+from homeassistant.components.sensor import (
+    SensorEntity,
+    SensorStateClass,
+    SensorDeviceClass,
+)
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from . import CONF_CHANNEL
 from .const import SENSOR_TYPES, MODELS
@@ -17,7 +25,12 @@ from .const import SENSOR_TYPES, MODELS
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform(hass, config, add_devices, discovery_info=None):
+async def async_setup_platform(
+    hass: HomeAssistant,
+    config: ConfigType,
+    async_add_entities: AddEntitiesCallback,
+    discovery_info: DiscoveryInfoType | None = None,
+) -> None:
     """Ubibot sensor setup."""
 
     api_key = config.get(CONF_API_KEY)
@@ -26,8 +39,11 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
 
     ubibot_data = UbibotData(api_key, channel, scan_interval)
 
-    for t in SENSOR_TYPES.keys():
-        add_devices([UbibotSensor(t, channel, ubibot_data)])
+    entities = []
+    for t in SENSOR_TYPES:
+        entities.append(UbibotSensor(t, channel, ubibot_data))
+    
+    async_add_entities(entities, True)
 
 
 class UbibotSensor(SensorEntity):

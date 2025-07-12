@@ -1,9 +1,12 @@
 """Constants for Ubibot module."""
+from homeassistant.const import (
+    PERCENTAGE,
+    UnitOfTemperature,
+    SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
+    LIGHT_LUX,
+)
 from homeassistant.components.sensor import (
     SensorDeviceClass,
-    UnitOfIlluminance,
-    UnitOfSignalStrength,
-    UnitOfTemperature,
 )
 
 DOMAIN = "ubibot"
@@ -23,27 +26,27 @@ SENSOR_TYPES = {
         "icon": "mdi:thermometer",
         "field": "field9",
     },
-     "humidity_ext": {
+    "humidity_ext": {
         "class": SensorDeviceClass.HUMIDITY,
-        "unit": "%",
+        "unit": PERCENTAGE,
         "icon": "mdi:water-percent",
         "field": "field10",
     },
     "humidity": {
         "class": SensorDeviceClass.HUMIDITY,
-        "unit": "%",
+        "unit": PERCENTAGE,
         "icon": "mdi:water-percent",
         "field": "field2",
     },
     "lux": {
         "class": SensorDeviceClass.ILLUMINANCE,
-        "unit": UnitOfIlluminance.LUX,
+        "unit": LIGHT_LUX,
         "icon": "mdi:lightbulb-on-outline",
         "field": "field3",
     },
     "wifi_rssi": {
         "class": SensorDeviceClass.SIGNAL_STRENGTH,
-        "unit": UnitOfSignalStrength.DECIBEL_MILLIWATT,
+        "unit": SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
         "icon": "mdi:wifi",
         "field": "field5",
     },
