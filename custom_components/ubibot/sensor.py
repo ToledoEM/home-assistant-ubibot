@@ -4,6 +4,7 @@ import json
 import logging
 import threading
 
+import aiohttp
 import requests
 
 from homeassistant.const import (
@@ -39,6 +40,7 @@ async def async_setup_platform(
     scan_interval = config.get(CONF_SCAN_INTERVAL)
 
     ubibot_data = UbibotData(api_key, channel, scan_interval)
+    await ubibot_data.async_update(hass)
 
     entities = []
     for t in SENSOR_TYPES:
@@ -54,6 +56,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     scan_interval = entry.data.get(CONF_SCAN_INTERVAL)
 
     ubibot_data = UbibotData(api_key, channel, scan_interval)
+    await ubibot_data.async_update(hass)
 
     entities = []
     for t in SENSOR_TYPES:
@@ -130,7 +133,6 @@ class UbibotSensor(SensorEntity):
                     ("ubibot", self._ubibot_data.data["channel"]["full_serial"])
                 },
                 "name": self._ubibot_data.data["channel"]["full_serial"],
-                "firmware": self._ubibot_data.data["channel"]["firmware"],
                 "manufacturer": "Ubibot",
                 "model": MODELS.get(self._ubibot_data.data["channel"].get("product_id"), "Unknown"),
             }
@@ -184,5 +186,34 @@ class UbibotData:
             self.last_refresh = datetime.now()
         except Exception as err:
             _LOGGER.error(f"UbibotData update exception: {err}")
+        finally:
+            self._update_in_progress.release()
+
+    async def async_update(self, hass):
+        """Get data from Ubibot API asynchronously."""
+        if (
+            datetime.now() < self.last_refresh + timedelta(seconds=self.scan_interval)
+            or not self._update_in_progress.acquire(False)
+        ):
+            return
+        try:
+            url = UbibotData.URL.format(self.channel, self.account_key)
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as resp:
+                    if resp.status == 200:
+                        try:
+                            text = await resp.text()
+                            self.data = json.loads(text)
+                            self.data["channel"]["last_values"] = json.loads(
+                                self.data["channel"]["last_values"]
+                            )
+                        except (KeyError, ValueError, TypeError) as err:
+                            _LOGGER.error(f"UbibotData API response error: {err}")
+                            self.data = None
+                    else:
+                        _LOGGER.error(f"Ubibot API error: {resp.status}")
+                    self.last_refresh = datetime.now()
+        except Exception as err:
+            _LOGGER.error(f"UbibotData async_update exception: {err}")
         finally:
             self._update_in_progress.release()
