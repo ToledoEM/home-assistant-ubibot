@@ -35,7 +35,9 @@ class UbibotData:
 
     URL = "https://api.ubibot.io/channels/{0}?account_key={1}"
 
-    def __init__(self, hass: HomeAssistant, account_key: str, channel: str, scan_interval: int):
+    def __init__(
+        self, hass: HomeAssistant, account_key: str, channel: str, scan_interval: int
+    ):
         """Initialize the Ubibot data object."""
         self.hass = hass
         self.account_key = account_key
@@ -105,7 +107,9 @@ class UbibotSensor(CoordinatorEntity, SensorEntity):
                 },
                 "name": self._ubibot_data.data["channel"]["full_serial"],
                 "manufacturer": "Ubibot",
-                "model": MODELS.get(self._ubibot_data.data["channel"].get("product_id"), "Unknown"),
+                "model": MODELS.get(
+                    self._ubibot_data.data["channel"].get("product_id"), "Unknown"
+                ),
             }
         except (TypeError, KeyError) as err:
             _LOGGER.debug("Error getting device info: %s", err)
@@ -123,9 +127,7 @@ async def async_setup_platform(
     channel = config.get(CONF_CHANNEL)
     scan_interval = config.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
 
-    await async_setup_ubibot(
-        hass, api_key, channel, scan_interval, async_add_entities
-    )
+    await async_setup_ubibot(hass, api_key, channel, scan_interval, async_add_entities)
 
 
 async def async_setup_entry(
@@ -138,9 +140,7 @@ async def async_setup_entry(
     channel = entry.data[CONF_CHANNEL]
     scan_interval = entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
 
-    await async_setup_ubibot(
-        hass, api_key, channel, scan_interval, async_add_entities
-    )
+    await async_setup_ubibot(hass, api_key, channel, scan_interval, async_add_entities)
 
 
 async def async_setup_ubibot(
@@ -166,8 +166,6 @@ async def async_setup_ubibot(
 
     entities = []
     for sensor_type in SENSOR_TYPES:
-        entities.append(
-            UbibotSensor(coordinator, sensor_type, channel, ubibot_data)
-        )
+        entities.append(UbibotSensor(coordinator, sensor_type, channel, ubibot_data))
 
     async_add_entities(entities, False)

@@ -26,9 +26,9 @@ CONFIG_SCHEMA = vol.Schema(
             {
                 vol.Required(CONF_API_KEY): cv.string,
                 vol.Required(CONF_CHANNEL): cv.string,
-                vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): vol.All(
-                    cv.positive_int, vol.Range(min=60)
-                ),
+                vol.Optional(
+                    CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL
+                ): vol.All(cv.positive_int, vol.Range(min=60)),
             }
         )
     },
