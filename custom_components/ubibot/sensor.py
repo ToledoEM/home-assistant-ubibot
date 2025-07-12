@@ -1,5 +1,5 @@
 """Ubibot sensor."""
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import logging
 import threading
@@ -154,7 +154,7 @@ class UbibotData:
     def update(self):
         """Get data from Ubibot API."""
         if (
-            datetime.now() < self.last_refresh + self.scan_interval
+            datetime.now() < self.last_refresh + timedelta(seconds=self.scan_interval)
             or not self._update_in_progress.acquire(False)
         ):
             return
