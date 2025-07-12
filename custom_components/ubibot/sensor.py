@@ -70,9 +70,12 @@ class UbibotSensor(SensorEntity):
         self._type = sensor_type
         self._channel = channel
         self._ubibot_data = ubibot_data
-        self._state = self._ubibot_data.data["channel"]["last_values"][
-            SENSOR_TYPES[self._type]["field"]
-        ]["value"]
+        self._state = None
+        try:
+            self._state = self._ubibot_data.data["channel"]["last_values"][SENSOR_TYPES[self._type]["field"]]["value"]
+        except (TypeError, KeyError, ValueError) as err:
+            _LOGGER.error(f"UbibotSensor init error for {self._type}: {err}")
+            self._state = None
 
     @property
     def name(self):
@@ -107,9 +110,11 @@ class UbibotSensor(SensorEntity):
     def update(self):
         """Fetch new state data for the sensor."""
         self._ubibot_data.update()
-        self._state = self._ubibot_data.data["channel"]["last_values"][
-            SENSOR_TYPES[self._type]["field"]
-        ]["value"]
+        try:
+            self._state = self._ubibot_data.data["channel"]["last_values"][SENSOR_TYPES[self._type]["field"]]["value"]
+        except (TypeError, KeyError, ValueError) as err:
+            _LOGGER.error(f"UbibotSensor update error for {self._type}: {err}")
+            self._state = None
 
     @property
     def state_class(self):
@@ -119,15 +124,19 @@ class UbibotSensor(SensorEntity):
     @property
     def device_info(self):
         """Return device"""
-        return {
-            "identifiers": {
-                ("ubibot", self._ubibot_data.data["channel"]["full_serial"])
-            },
-            "name": self._ubibot_data.data["channel"]["full_serial"],
-            "firmware": self._ubibot_data.data["channel"]["firmware"],
-            "manufacturer": "Ubibot",
-            "model": MODELS[self._ubibot_data.data["channel"]["product_id"]],
-        }
+        try:
+            return {
+                "identifiers": {
+                    ("ubibot", self._ubibot_data.data["channel"]["full_serial"])
+                },
+                "name": self._ubibot_data.data["channel"]["full_serial"],
+                "firmware": self._ubibot_data.data["channel"]["firmware"],
+                "manufacturer": "Ubibot",
+                "model": MODELS.get(self._ubibot_data.data["channel"].get("product_id"), "Unknown"),
+            }
+        except (TypeError, KeyError) as err:
+            _LOGGER.error(f"UbibotSensor device_info error: {err}")
+            return {}
 
 
 class UbibotData:
@@ -162,12 +171,18 @@ class UbibotData:
             url = UbibotData.URL.format(self.channel, self.account_key)
             r = requests.get(url)
             if r.status_code == 200:
-                self.data = json.loads(r.text)
-                self.data["channel"]["last_values"] = json.loads(
-                    self.data["channel"]["last_values"]
-                )
+                try:
+                    self.data = json.loads(r.text)
+                    self.data["channel"]["last_values"] = json.loads(
+                        self.data["channel"]["last_values"]
+                    )
+                except (KeyError, ValueError, TypeError) as err:
+                    _LOGGER.error(f"UbibotData API response error: {err}")
+                    self.data = None
             else:
-                _LOGGER.error(r.status_code)
+                _LOGGER.error(f"Ubibot API error: {r.status_code}")
             self.last_refresh = datetime.now()
+        except Exception as err:
+            _LOGGER.error(f"UbibotData update exception: {err}")
         finally:
             self._update_in_progress.release()
