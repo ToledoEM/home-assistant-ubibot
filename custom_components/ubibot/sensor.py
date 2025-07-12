@@ -18,6 +18,7 @@ from homeassistant.components.sensor import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+from homeassistant.config_entries import ConfigEntry
 
 from . import CONF_CHANNEL
 from .const import SENSOR_TYPES, MODELS
@@ -36,6 +37,21 @@ async def async_setup_platform(
     api_key = config.get(CONF_API_KEY)
     channel = config.get(CONF_CHANNEL)
     scan_interval = config.get(CONF_SCAN_INTERVAL)
+
+    ubibot_data = UbibotData(api_key, channel, scan_interval)
+
+    entities = []
+    for t in SENSOR_TYPES:
+        entities.append(UbibotSensor(t, channel, ubibot_data))
+    
+    async_add_entities(entities, True)
+
+
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
+    """Set up Ubibot sensors from a config entry."""
+    api_key = entry.data[CONF_API_KEY]
+    channel = entry.data[CONF_CHANNEL]
+    scan_interval = entry.data.get(CONF_SCAN_INTERVAL)
 
     ubibot_data = UbibotData(api_key, channel, scan_interval)
 

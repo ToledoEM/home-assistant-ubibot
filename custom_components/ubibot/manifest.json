@@ -6,7 +6,7 @@
   "issue_tracker": "https://github.com/ToledoEM/home-assistant-ubibot/issues",
   "requirements": ["requests"],
   "dependencies": [],
-  "codeowners": ["@ms32035"],
+  "codeowners": ["@toledoem"],
   "iot_class": "cloud_polling",
-  "version": "0.3.0"
+  "version": "0.5"
 }
