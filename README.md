@@ -1,5 +1,7 @@
 # Ubibot Integration for Home Assistant
 
+![ubibot](newLogo_en.png "Ubibot")
+
 This integration allows you to integrate your Ubibot sensors with Home Assistant, providing real-time monitoring of temperature, humidity, light levels, and WiFi signal strength.
 
 ## Features
