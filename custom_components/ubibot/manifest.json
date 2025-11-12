@@ -8,6 +8,5 @@
   "dependencies": [],
   "codeowners": ["@toledoem"],
   "iot_class": "cloud_polling",
-  "version": "0.5",
-  "icon": "logo.png"
+  "version": "0.5"
 }
