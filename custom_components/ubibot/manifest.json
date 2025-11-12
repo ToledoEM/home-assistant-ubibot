@@ -1,12 +1,12 @@
 {
   "domain": "ubibot",
   "name": "Ubibot",
+  "codeowners": ["@toledoem"],
   "config_flow": true,
+  "dependencies": [],
   "documentation": "https://github.com/ToledoEM/home-assistant-ubibot/blob/master/README.md",
+  "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/ToledoEM/home-assistant-ubibot/issues",
   "requirements": ["requests"],
-  "dependencies": [],
-  "codeowners": ["@toledoem"],
-  "iot_class": "cloud_polling",
   "version": "0.5"
 }
