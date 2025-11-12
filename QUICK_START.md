@@ -89,7 +89,7 @@ After configuration, you'll see these sensors in Home Assistant:
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/ToledoEM/home-assistant-ubibot/issues)
-- **Documentation**: [README](https://github.com/ToledoEM/home-assistant-ubibot/blob/master/README.md)
+- **Documentation**: [README](https://github.com/ToledoEM/home-assistant-ubibot#readme)
 - **Ubibot Help**: [Ubibot API Documentation](https://www.ubibot.io/platform-api/)
 
 ## Version Information
