@@ -2,7 +2,7 @@
   "domain": "ubibot",
   "name": "Ubibot",
   "config_flow": true,
-  "documentation": "https://github.com/ToledoEM/home-assistant-ubibot/blob/master/README.md",
+  "documentation": "https://github.com/ToledoEM/home-assistant-ubibot#readme",
   "issue_tracker": "https://github.com/ToledoEM/home-assistant-ubibot/issues",
   "requirements": ["requests"],
   "dependencies": [],
