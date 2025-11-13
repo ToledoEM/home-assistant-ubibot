@@ -1,6 +1,6 @@
 # Ubibot Integration for Home Assistant
 
-![ubibot](newLogo_en.png "Ubibot")
+![ubibot](https://toledoem.github.io/img/logo.png "Ubibot")
 
 A Home Assistant integration for Ubibot IoT environmental sensors, providing real-time monitoring of temperature, humidity, light levels, and more.
 
