@@ -33,7 +33,7 @@ This document tracks the readiness of the Ubibot integration for HACS publicatio
   - ✅ Configuration guide
   - ✅ Troubleshooting section
   - ✅ HACS publication information
-- ✅ **HACS_SUBMISSION.md** with detailed submission guide
+- ✅ HACS submission guidance documented (local/private notes optional)
 - ✅ **LICENSE** file (MIT License)
 
 ### GitHub Actions
@@ -111,7 +111,6 @@ The integration meets all technical requirements for HACS. The remaining tasks a
 ## 📚 References
 
 - [HACS Publisher Documentation](https://hacs.xyz/docs/publish/)
-- [Detailed Submission Guide](./HACS_SUBMISSION.md)
 - [Repository README](./README.md)
 
 ---

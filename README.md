@@ -105,7 +105,7 @@ To contribute:
 
 ### HACS Publication
 
-This integration is ready for HACS (Home Assistant Community Store). For detailed instructions on submitting to HACS, see [HACS_SUBMISSION.md](HACS_SUBMISSION.md).
+This integration is ready for HACS (Home Assistant Community Store). Submission notes are summarized below.
 
 **Quick steps:**
 - Repository meets HACS requirements (hacs.json, manifest.json, workflows)
