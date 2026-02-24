@@ -1,4 +1,5 @@
 """Constants for Ubibot module."""
+
 from homeassistant.const import (
     PERCENTAGE,
     UnitOfTemperature,

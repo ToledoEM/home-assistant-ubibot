@@ -1,10 +1,10 @@
 """Config flow for Ubibot integration."""
+
 from __future__ import annotations
 
 import logging
 from typing import Any
 
-import requests
 import voluptuous as vol
 
 from homeassistant import config_entries
@@ -12,8 +12,14 @@ from homeassistant.const import CONF_API_KEY, CONF_SCAN_INTERVAL
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DOMAIN, CONF_CHANNEL, DEFAULT_SCAN_INTERVAL
+from .api import (
+    UbibotApiClient,
+    UbibotApiError,
+    UbibotAuthenticationError,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,23 +36,17 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
 
 async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
     """Validate the user input allows us to connect."""
-    url = f"https://api.ubibot.io/channels/{data[CONF_CHANNEL]}?account_key={data[CONF_API_KEY]}"
-
     try:
-        response = await hass.async_add_executor_job(requests.get, url)
-        response.raise_for_status()
-        json_response = response.json()
-
-        if "error" in json_response:
-            raise InvalidAuth
-
+        client = UbibotApiClient(
+            async_get_clientsession(hass),
+            data[CONF_API_KEY],
+            data[CONF_CHANNEL],
+        )
+        await client.async_get_channel_data()
         return {"title": f"Ubibot Channel {data[CONF_CHANNEL]}"}
-
-    except requests.exceptions.HTTPError as err:
-        if err.response.status_code == 401:
-            raise InvalidAuth from err
-        raise CannotConnect from err
-    except (requests.exceptions.RequestException, ValueError) as err:
+    except UbibotAuthenticationError as err:
+        raise InvalidAuth from err
+    except UbibotApiError as err:
         raise CannotConnect from err
 
 
@@ -55,10 +55,6 @@ class UbibotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Ubibot."""
 
     VERSION = 1
-
-    async def async_step_import(self, import_data: dict[str, Any]) -> FlowResult:
-        """Handle import from configuration.yaml."""
-        return await self.async_step_user(import_data)
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
