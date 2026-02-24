@@ -22,6 +22,8 @@ Each Ubibot device will create the following sensors in Home Assistant:
 | Light Level            | Ambient light sensor                      | lux  |
 | WiFi Signal            | WiFi signal strength                      | dBm  |
 
+External probe sensors are created by the integration, but they may stay unavailable until a compatible probe is connected and the device reports those values.
+
 ## Requirements
 
 Before installing, you'll need:
@@ -35,15 +37,14 @@ Before installing, you'll need:
 ### HACS Installation (Recommended)
 
 1. Ensure [HACS](https://hacs.xyz/) is installed
-2. Add this repository to HACS:
-   - Click ⚙️ (HACS settings)
-   - Click "Custom repositories"
-   - Add `https://github.com/ToledoEM/home-assistant-ubibot`
-   - Select "Integration" as the category
-3. Click "+ Explore & Download Repositories"
-4. Search for "Ubibot"
-5. Click "Download"
-6. Restart Home Assistant
+2. Open HACS and go to "Integrations"
+3. Open the top-right menu and choose "Custom repositories"
+4. Add `https://github.com/ToledoEM/home-assistant-ubibot`
+5. Select "Integration" as the category
+6. Search for "Ubibot" in HACS and click "Download"
+7. Restart Home Assistant
+
+This repository is intended for HACS custom repository installation. Inclusion in the default HACS store requires additional review and branding requirements.
 
 ### Manual Installation
 
@@ -83,7 +84,7 @@ Common issues and solutions:
 ### Sensor Updates Are Delayed
 
 - Check your network connection
-- Verify the `scan_interval` setting
+- Verify the Update Interval setting
 - Ensure your Ubibot device is actively reporting
 
 ### Error Messages
@@ -106,6 +107,12 @@ To contribute:
 
 - Report issues on [GitHub](https://github.com/ToledoEM/home-assistant-ubibot/issues)
 - Read the [Ubibot API Documentation](https://www.ubibot.io/platform-api/)
+
+## Releases & Versioning
+
+- Integration releases use semantic versioning (for example `0.5.1`)
+- Git tags / GitHub releases should use the `vX.Y.Z` format (for example `v0.5.1`)
+- The `manifest.json` version matches the integration release version (without the leading `v`)
 
 ## License
 

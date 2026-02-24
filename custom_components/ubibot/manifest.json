@@ -4,9 +4,9 @@
   "codeowners": ["@toledoem"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/ToledoEM/home-assistant-ubibot/blob/master/README.md",
+  "documentation": "https://github.com/ToledoEM/home-assistant-ubibot",
+  "integration_type": "hub",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/ToledoEM/home-assistant-ubibot/issues",
-  "requirements": ["requests"],
-  "version": "0.5"
+  "version": "0.5.1"
 }

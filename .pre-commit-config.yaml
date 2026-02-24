@@ -5,7 +5,7 @@ repos:
     hooks:
       - id: black
         args: [--quiet]
-        files: ^((homeassistant|pylint|script|tests)/.+)?[^/]+\.py$
+        files: ^(custom_components|tests)/.+\.py$
 
   # General file checks
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -56,6 +56,4 @@ repos:
           - --py311-plus
           - --force
           - --keep-updates
-        files: ^(homeassistant|tests|script)/.+\.py$
-          - --keep-updates
-        files: ^(homeassistant|tests|script)/.+\.py$
+        files: ^(custom_components|tests)/.+\.py$
