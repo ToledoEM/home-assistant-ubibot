@@ -103,6 +103,15 @@ To contribute:
 2. Create a feature branch
 3. Submit a Pull Request
 
+### HACS Publication
+
+This integration is ready for HACS (Home Assistant Community Store). For detailed instructions on submitting to HACS, see [HACS_SUBMISSION.md](HACS_SUBMISSION.md).
+
+**Quick steps:**
+- Repository meets HACS requirements (hacs.json, manifest.json, workflows)
+- Users can add it as a custom repository immediately
+- To add to HACS defaults, submit a PR to [hacs/default](https://github.com/hacs/default)
+
 ## Support
 
 - Report issues on [GitHub](https://github.com/ToledoEM/home-assistant-ubibot/issues)
