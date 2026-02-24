@@ -1,2 +1,51 @@
-__pycache__
+# Personal/local-only notes
+HACS_SUBMISSION.md
+HACS_READINESS.md
+HACS_SUBMISSION_STEPS_PERSONAL.md
+QUICK_START.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 .claude
+
+# Python cache / build artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Test / coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Type checker / linter caches
+.mypy_cache/
+.ruff_cache/
+.pyre/
+
+# Tool caches
+.cache/
+.pre-commit-cache/
+
+# Local env / secrets
+.env
+.env.*
